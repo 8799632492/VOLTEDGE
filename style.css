@@ -8,41 +8,41 @@
     color: transparent;
 }
 
-/* Circuit Loader Animations */
-.circuit-loader .animate-pulse {
-    animation: pulse 1.5s infinite ease-in-out;
+/* Circuit Loader */
+.circuit-loader {
+    position: relative;
 }
 
-.circuit-loader .animate-flow {
+.circuit-loader div:nth-child(1), .circuit-loader div:nth-child(3) {
+    will-change: transform, opacity;
+}
+
+.circuit-loader div:nth-child(2) {
     background: linear-gradient(to right, #3b82f6, transparent);
-    animation: flow 2s infinite linear;
+    will-change: background-position;
 }
 
-@keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(1.2); }
-}
-
-@keyframes flow {
-    0% { background-position: 0 0; }
-    100% { background-position: 100px 0; }
-}
-
-/* Circuit Paths (Hero Section Background) */
+/* Circuit Paths (Hero Background) */
 .circuit-paths {
     background: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"%3E%3Cpath d="M0 50 H20 V30 H40 V70 H60 V50 H80 V70 H100" fill="none" stroke="%233b82f6" stroke-width="0.5" opacity="0.2"/%3E%3C/svg%3E');
     background-size: cover;
     opacity: 0.1;
+    will-change: transform;
 }
 
-/* Sparks Effect */
-.sparks-container, .spark-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+/* Sparks */
+.sparks-container {
     overflow: hidden;
+}
+
+.spark {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #ef4444;
+    border-radius: 50%;
+    opacity: 0;
+    will-change: transform, opacity;
 }
 
 .spark-container::after {
@@ -53,16 +53,9 @@
     background: #ef4444;
     border-radius: 50%;
     opacity: 0;
-    animation: spark 1s infinite;
 }
 
-@keyframes spark {
-    0% { opacity: 0; transform: translate(0, 0); }
-    50% { opacity: 1; }
-    100% { opacity: 0; transform: translate(20px, 20px); }
-}
-
-/* Active Tab Styling */
+/* Active Tab */
 .tab-btn.active {
     background-color: #3b82f6;
     color: white;
@@ -71,14 +64,45 @@
 /* PDF Canvas */
 #pdfCanvas {
     max-height: 70vh;
+    width: 100%;
 }
 
-/* Mobile Menu Transitions */
-#mobileMenu {
-    transition: max-height 0.3s ease-in-out;
+/* Responsive Adjustments */
+@media (max-width: 640px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    #authModal > div, #pdfModal > div {
+        max-width: 90%;
+    }
+
+    .text-4xl {
+        font-size: 2rem;
+    }
+
+    .text-6xl {
+        font-size: 3rem;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .circuit-paths {
+        background-size: contain;
+    }
 }
 
-/* Admin Section */
-.admin-section.hidden {
-    display: none;
+/* Modal Overflow */
+#authModal, #pdfModal {
+    overflow-y: auto;
+}
+
+/* Smooth Transitions */
+button, a, input, select, textarea {
+    transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
 }
