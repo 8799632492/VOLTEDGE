@@ -1,148 +1,130 @@
-// script.js
-document.addEventListener('DOMContentLoaded', () => {
-    const container = document.getElementById('main-container');
-    const sparksContainer = document.getElementById('sparks');
-    const currentFollower = document.getElementById('current-follower');
-    const circuitPaths = document.querySelector('.circuit-paths');
-    const featureCards = document.querySelectorAll('.feature-card');
+/* Custom Animations */
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.5); opacity: 1; }
+}
 
-    // Create sparks
-    setInterval(() => {
-        for (let i = 0; i < 5; i++) {
-            const spark = document.createElement('div');
-            spark.className = 'spark';
-            spark.style.left = `${Math.random() * 100}%`;
-            spark.style.top = `${Math.random() * 100}%`;
-            const size = Math.random() * 3 + 1;
-            spark.style.width = `${size}px`;
-            spark.style.height = `${size}px`;
-            spark.style.boxShadow = `0 0 ${size * 2}px ${size / 2}px rgba(59, 130, 246, 0.7)`;
-            spark.style.animationDuration = `${Math.random() * 3 + 2}s`;
-            spark.style.animationDelay = `${Math.random() * 2}s`;
-            sparksContainer.appendChild(spark);
+@keyframes flow {
+    0% { width: 0; opacity: 0; }
+    50% { opacity: 1; }
+    100% { width: 100%; opacity: 0; }
+}
 
-            setTimeout(() => spark.remove(), 5000);
-        }
-    }, 300);
+@keyframes sparkle {
+    0% { transform: scale(0); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
 
-    // Mouse/touch follower
-    const updateFollower = (x, y) => {
-        currentFollower.style.left = `calc(${x}% - clamp(3rem, 7.5vw, 4rem))`;
-        currentFollower.style.top = `calc(${y}% - clamp(3rem, 7.5vw, 4rem))`;
-    };
+.animate-pulse { animation: pulse 1.5s infinite; }
+.animate-flow { animation: flow 1.5s infinite; }
 
-    container.addEventListener('mousemove', (e) => {
-        const rect = container.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) * 100;
-        const y = ((e.clientY - rect.top) / rect.height) * 100;
-        updateFollower(x, y);
-    });
+.gradient-text {
+    background: linear-gradient(90deg, #3b82f6, #ef4444);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient 5s ease infinite;
+    background-size: 200%;
+}
 
-    container.addEventListener('touchmove', (e) => {
-        e.preventDefault();
-        const touch = e.touches[0];
-        const rect = container.getBoundingClientRect();
-        const x = ((touch.clientX - rect.left) / rect.width) * 100;
-        const y = ((touch.clientY - rect.top) / rect.height) * 100;
-        updateFollower(x, y);
-    }, { passive: false });
+@keyframes gradient {
+    0% { background-position: 0%; }
+    50% { background-position: 100%; }
+    100% { background-position: 0%; }
+}
 
-    // Circuit paths
-    for (let i = 0; i < 10; i++) {
-        const path = document.createElement('div');
-        path.className = 'path';
-        const top = 20 + Math.random() * 60;
-        const left = Math.random() * 100;
-        const width = 30 + Math.random() * 40;
-        path.style.top = `${top}%`;
-        path.style.left = `${left}%`;
-        path.style.width = `${width}%`;
-        path.style.animation = `flowPath ${3 + Math.random() * 4}s linear ${Math.random() * 5}s infinite`;
-        circuitPaths.appendChild(path);
-    }
+/* Circuit Paths */
+.circuit-paths {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
 
-    // Feature card effects
-    featureCards.forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            const shimmer = document.createElement('div');
-            shimmer.className = 'shimmer';
-            shimmer.style.position = 'absolute';
-            shimmer.style.inset = '0';
-            shimmer.style.background = 'linear-gradient(to right, transparent, rgba(59, 130, 246, 0.1), transparent)';
-            shimmer.style.animation = 'shimmer 2s infinite';
-            card.appendChild(shimmer);
+.circuit-path {
+    position: absolute;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+    animation: flow 3s infinite;
+}
 
-            for (let i = 0; i < 15; i++) {
-                const node = document.createElement('div');
-                node.className = 'circuit-node';
-                const size = 1 + Math.random() * 2;
-                node.style.width = `${size}px`;
-                node.style.height = `${size}px`;
-                node.style.left = `${Math.random() * 100}%`;
-                node.style.top = `${Math.random() * 100}%`;
-                node.style.boxShadow = `0 0 ${size * 2}px ${size}px rgba(59, 130, 246, 0.5)`;
-                node.style.animation = `fadeInOut ${1 + Math.random() * 3}s ease-in-out ${Math.random() * 0.5}s infinite alternate`;
-                card.appendChild(node);
-            }
-        });
+/* Sparks */
+.spark {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #3b82f6;
+    border-radius: 50%;
+    animation: sparkle 1s ease-out forwards;
+}
 
-        card.addEventListener('mouseleave', () => {
-            card.querySelectorAll('.shimmer, .circuit-node').forEach(el => el.remove());
-        });
+/* Button Sparks */
+.spark-container .spark {
+    width: 4px;
+    height: 4px;
+    background: white;
+    position: absolute;
+    animation: spark 0.5s ease-out;
+}
 
-        // Touch support for mobile
-        card.addEventListener('touchstart', () => {
-            const shimmer = document.createElement('div');
-            shimmer.className = 'shimmer';
-            shimmer.style.position = 'absolute';
-            shimmer.style.inset = '0';
-            shimmer.style.background = 'linear-gradient(to right, transparent, rgba(59, 130, 246, 0.1), transparent)';
-            shimmer.style.animation = 'shimmer 2s infinite';
-            card.appendChild(shimmer);
+@keyframes spark {
+    0% { transform: scale(0); opacity: 1; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
 
-            for (let i = 0; i < 15; i++) {
-                const node = document.createElement('div');
-                node.className = 'circuit-node';
-                const size = 1 + Math.random() * 2;
-                node.style.width = `${size}px`;
-                node.style.height = `${size}px`;
-                node.style.left = `${Math.random() * 100}%`;
-                node.style.top = `${Math.random() * 100}%`;
-                node.style.boxShadow = `0 0 ${size * 2}px ${size}px rgba(59, 130, 246, 0.5)`;
-                node.style.animation = `fadeInOut ${1 + Math.random() * 3}s ease-in-out ${Math.random() * 0.5}s infinite alternate`;
-                card.appendChild(node);
-            }
+/* Tabs */
+.tab-btn.active {
+    background: #3b82f6 !important;
+    color: white !important;
+}
 
-            setTimeout(() => {
-                card.querySelectorAll('.shimmer, .circuit-node').forEach(el => el.remove());
-            }, 2000);
-        });
-    });
+/* Navigation */
+.nav-link {
+    position: relative;
+}
 
-    // Add sparks to primary button
-    const primaryButton = document.querySelector('.button.primary');
-    primaryButton.addEventListener('mouseenter', () => {
-        for (let i = 0; i < 5; i++) {
-            const spark = document.createElement('span');
-            spark.className = 'spark';
-            spark.style.left = `${Math.random() * 100}%`;
-            spark.style.top = `${Math.random() * 100}%`;
-            spark.style.animationDelay = `${i * 0.1}s`;
-            primaryButton.appendChild(spark);
-            setTimeout(() => spark.remove(), 600);
-        }
-    });
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #3b82f6;
+    transition: width 0.3s;
+}
 
-    // Touch support for primary button
-    primaryButton.addEventListener('touchstart', () => {
-        for (let i = 0; i < 5; i++) {
-            const spark = document.createElement('span');
-            spark.className = 'spark';
-            spark.style.left = `${Math.random() * 100}%`;
-            spark.style.top = `${Math.random() * 100}%`;
-            spark.style.animationDelay = `${i * 0.1}s`;
-            primaryButton.appendChild(spark);
-            setTimeout(() => spark.remove(), 600);
-        }
-    });
-});
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* Dropdown */
+.dropdown-menu.active {
+    display: block;
+}
+
+/* PDF Canvas */
+#pdfCanvas {
+    max-height: 70vh;
+}
+
+/* Admin Section */
+.admin-section {
+    display: none;
+}
+
+.is-admin .admin-section {
+    display: block;
+}
+
+/* File Upload */
+.file-upload {
+    border: 2px dashed #3b82f6;
+    padding: 1rem;
+    text-align: center;
+    cursor: pointer;
+}
+
+.file-upload:hover {
+    background: rgba(59, 130, 246, 0.1);
+}
