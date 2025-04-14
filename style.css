@@ -1,106 +1,71 @@
-/* Custom Animations */
+/* styles.css */
+
+/* Gradient Text */
+.gradient-text {
+    background: linear-gradient(to right, #3b82f6, #ef4444);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* Circuit Loader Animations */
+.circuit-loader .animate-pulse {
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.circuit-loader .animate-flow {
+    background: linear-gradient(to right, #3b82f6, transparent);
+    animation: flow 2s infinite linear;
+}
+
 @keyframes pulse {
-    0%, 100% { transform: scale(1); opacity: 0.6; }
-    50% { transform: scale(1.5); opacity: 1; }
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.2); }
 }
 
 @keyframes flow {
-    0% { width: 0; opacity: 0; }
-    50% { opacity: 1; }
-    100% { width: 100%; opacity: 0; }
+    0% { background-position: 0 0; }
+    100% { background-position: 100px 0; }
 }
 
-@keyframes sparkle {
-    0% { transform: scale(0); opacity: 0; }
-    50% { opacity: 1; }
-    100% { transform: scale(1.5); opacity: 0; }
-}
-
-.animate-pulse { animation: pulse 1.5s infinite; }
-.animate-flow { animation: flow 1.5s infinite; }
-
-.gradient-text {
-    background: linear-gradient(90deg, #3b82f6, #ef4444);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: gradient 5s ease infinite;
-    background-size: 200%;
-}
-
-@keyframes gradient {
-    0% { background-position: 0%; }
-    50% { background-position: 100%; }
-    100% { background-position: 0%; }
-}
-
-/* Circuit Paths */
+/* Circuit Paths (Hero Section Background) */
 .circuit-paths {
+    background: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"%3E%3Cpath d="M0 50 H20 V30 H40 V70 H60 V50 H80 V70 H100" fill="none" stroke="%233b82f6" stroke-width="0.5" opacity="0.2"/%3E%3C/svg%3E');
+    background-size: cover;
+    opacity: 0.1;
+}
+
+/* Sparks Effect */
+.sparks-container, .spark-container {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
+    overflow: hidden;
 }
 
-.circuit-path {
+.spark-container::after {
+    content: '';
     position: absolute;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #3b82f6, transparent);
-    animation: flow 3s infinite;
-}
-
-/* Sparks */
-.spark {
-    position: absolute;
-    width: 6px;
-    height: 6px;
-    background: #3b82f6;
-    border-radius: 50%;
-    animation: sparkle 1s ease-out forwards;
-}
-
-/* Button Sparks */
-.spark-container .spark {
     width: 4px;
     height: 4px;
-    background: white;
-    position: absolute;
-    animation: spark 0.5s ease-out;
+    background: #ef4444;
+    border-radius: 50%;
+    opacity: 0;
+    animation: spark 1s infinite;
 }
 
 @keyframes spark {
-    0% { transform: scale(0); opacity: 1; }
-    100% { transform: scale(1.5); opacity: 0; }
+    0% { opacity: 0; transform: translate(0, 0); }
+    50% { opacity: 1; }
+    100% { opacity: 0; transform: translate(20px, 20px); }
 }
 
-/* Tabs */
+/* Active Tab Styling */
 .tab-btn.active {
-    background: #3b82f6 !important;
-    color: white !important;
-}
-
-/* Navigation */
-.nav-link {
-    position: relative;
-}
-
-.nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: #3b82f6;
-    transition: width 0.3s;
-}
-
-.nav-link:hover::after {
-    width: 100%;
-}
-
-/* Dropdown */
-.dropdown-menu.active {
-    display: block;
+    background-color: #3b82f6;
+    color: white;
 }
 
 /* PDF Canvas */
@@ -108,23 +73,12 @@
     max-height: 70vh;
 }
 
+/* Mobile Menu Transitions */
+#mobileMenu {
+    transition: max-height 0.3s ease-in-out;
+}
+
 /* Admin Section */
-.admin-section {
+.admin-section.hidden {
     display: none;
-}
-
-.is-admin .admin-section {
-    display: block;
-}
-
-/* File Upload */
-.file-upload {
-    border: 2px dashed #3b82f6;
-    padding: 1rem;
-    text-align: center;
-    cursor: pointer;
-}
-
-.file-upload:hover {
-    background: rgba(59, 130, 246, 0.1);
 }
