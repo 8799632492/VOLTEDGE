@@ -1,150 +1,454 @@
 <!DOCTYPE html>
-<html lang="en" >
-<head>
-  <meta charset="UTF-8">
-  <title>Untitled</title>
-  <link rel="stylesheet" href="./style.css">
-
-</head>
-<body>
-<!-- partial:index.partial.html -->
-<!-- index.html -->
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VoltEdge - Electrical Learning Platform</title>
+    <title>VoltEdge - Electrical Engineering Learning</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <div class="container" id="main-container">
-        <!-- Circuit background effect -->
-        <div class="circuit-background">
-            <div class="grid-pattern"></div>
-            <div id="sparks"></div>
+<body class="bg-gray-900 text-white font-inter overflow-x-hidden">
+    <!-- Loader -->
+    <div id="loader" class="fixed inset-0 bg-gray-900 flex flex-col items-center justify-center z-50">
+        <div class="circuit-loader flex items-center gap-4">
+            <div class="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
+            <div class="w-12 h-0.5 bg-blue-500 animate-flow"></div>
+            <div class="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
         </div>
-
-        <!-- Interactive current follower -->
-        <div id="current-follower" class="current-follower"></div>
-
-        <!-- Header -->
-        <header class="header">
-            <div class="header-content">
-                <div class="logo">
-                    <div class="logo-icon">
-                        <svg class="zap-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-                        </svg>
-                    </div>
-                    <span class="logo-text">VoltEdge</span>
-                </div>
-                <nav class="nav">
-                    <a href="#" class="nav-item">Home</a>
-                    <a href="#" class="nav-item">Courses</a>
-                    <a href="#" class="nav-item">Resources</a>
-                    <a href="#" class="nav-item">Community</a>
-                    <a href="#" class="nav-item">About</a>
-                </nav>
-                <button class="search-button">
-                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <circle cx="11" cy="11" r="8"/>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                    </svg>
-                </button>
-            </div>
-        </header>
-
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-content">
-                <h1 class="hero-title">Master Electrical Engineering</h1>
-                <p class="hero-description">
-                    A comprehensive learning platform designed specifically for diploma electrical engineering students. Build practical skills through interactive learning.
-                </p>
-                <div class="hero-buttons">
-                    <button class="button primary">Get Started</button>
-                    <button class="button secondary">Explore Courses</button>
-                </div>
-            </div>
-            <div class="circuit-paths"></div>
-        </section>
-
-        <!-- Features Section -->
-        <section class="features">
-            <div class="features-grid">
-                <div class="feature-card" data-index="0">
-                    <div class="circuit-overlay"></div>
-                    <a href="#" class="learn-more">Learn More <span class="chevron">➜</span></a>
-                </div>
-                <div class="feature-card" data-index="1">
-                    <div class="circuit-overlay"></div>
-                    <a href="#" class="learn-more">Learn More <span class="chevron">➜</span></a>
-                </div>
-                <div class="feature-card" data-index="2">
-                    <div class="circuit-overlay"></div>
-                    <a href="#" class="learn-more">Learn More <span class="chevron">➜</span></a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Courses Section -->
-        <section class="courses">
-            <div class="courses-header">
-                <h2>Featured Courses</h2>
-                <p>Comprehensive courses designed specifically for diploma electrical engineering students</p>
-            </div>
-            <div class="courses-grid">
-                <div class="course-card">
-                    <div class="course-image">
-                        <img src="https://via.placeholder.com/400x300" alt="Circuit Analysis">
-                        <span class="course-tag">Fundamentals</span>
-                    </div>
-                    <div class="course-content">
-                        <h3>Circuit Analysis</h3>
-                        <p>Master the fundamentals of electrical circuits, from DC to AC analysis and network theorems.</p>
-                        <div class="course-meta">
-                            <div class="rating">★★★★★</div>
-                            <div class="modules">12 Modules</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="course-card">
-                    <div class="course-image">
-                        <img src="https://via.placeholder.com/400x300" alt="Power Systems">
-                        <span class="course-tag">Advanced</span>
-                    </div>
-                    <div class="course-content">
-                        <h3>Power Systems</h3>
-                        <p>Learn about power generation, transmission, distribution, and system protection.</p>
-                        <div class="course-meta">
-                            <div class="rating">★★★★☆</div>
-                            <div class="modules">10 Modules</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="course-card">
-                    <div class="course-image">
-                        <img src="https://via.placeholder.com/400x300" alt="Digital Electronics">
-                        <span class="course-tag">Intermediate</span>
-                    </div>
-                    <div class="course-content">
-                        <h3>Digital Electronics</h3>
-                        <p>Explore logic gates, combinational and sequential circuits, and microprocessor basics.</p>
-                        <div class="course-meta">
-                            <div class="rating">★★★★★</div>
-                            <div class="modules">14 Modules</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <p class="mt-4 text-lg">Loading VoltEdge...</p>
+        <p id="loaderError" class="mt-2 text-red-500 hidden">Loading failed. Check console.</p>
     </div>
-    <script src="script.js"></script>
-</body>
-</html>
-<!-- partial -->
-  <script  src="./script.js"></script>
 
-</body>
+    <!-- Auth Modal -->
+    <div id="authModal" class="fixed inset-0 bg-black/70 flex items-center justify-center z-40 hidden">
+        <div class="bg-gray-800 p-6 rounded-xl max-w-md w-full">
+            <button id="closeAuthModal" class="absolute top-4 right-4 text-gray-400 hover:text-red-500"><i class="fas fa-times"></i></button>
+            <div class="flex border-b border-gray-700 mb-4">
+                <button class="tab-btn flex-1 py-2 text-center active" data-tab="login">Login</button>
+                <button class="tab-btn flex-1 py-2 text-center" data-tab="signup">Sign Up</button>
+            </div>
+            <div id="loginTab" class="tab-content">
+                <h2 class="text-2xl mb-4">Welcome Back</h2>
+                <button id="googleLogin" class="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg mb-4 w-full">
+                    <i class="fab fa-google"></i> Login with Google
+                </button>
+                <form id="loginForm">
+                    <div class="mb-4">
+                        <label for="loginEmail" class="block mb-1">Email</label>
+                        <input type="email" id="loginEmail" class="w-full p-2 bg-gray-700 rounded" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="loginPassword" class="block mb-1">Password</label>
+                        <input type="password" id="loginPassword" class="w-full p-2 bg-gray-700 rounded" required>
+                    </div>
+                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-lg w-full">Login</button>
+                </form>
+                <button id="requestOtp" class="mt-2 text-blue-400 hover:underline">Login with OTP</button>
+                <p id="loginMessage" class="mt-4 text-center"></p>
+            </div>
+            <div id="signupTab" class="tab-content hidden">
+                <h2 class="text-2xl mb-4">Create Account</h2>
+                <form id="signupForm">
+                    <div class="mb-4">
+                        <label for="signupName" class="block mb-1">Full Name</label>
+                        <input type="text" id="signupName" class="w-full p-2 bg-gray-700 rounded" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="signupEmail" class="block mb-1">Email</label>
+                        <input type="email" id="signupEmail" class="w-full p-2 bg-gray-700 rounded" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="signupPassword" class="block mb-1">Password</label>
+                        <input type="password" id="signupPassword" class="w-full p-2 bg-gray-700 rounded" required>
+                    </div>
+                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-lg w-full">Sign Up</button>
+                </form>
+                <p id="signupMessage" class="mt-4 text-center"></p>
+            </div>
+            <div id="otpTab" class="tab-content hidden">
+                <h2 class="text-2xl mb-4">Enter OTP</h2>
+                <form id="otpForm">
+                    <div class="mb-4">
+                        <label for="otpCode" class="block mb-1">OTP Code</label>
+                        <input type="text" id="otpCode" class="w-full p-2 bg-gray-700 rounded" required>
+                    </div>
+                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-lg w-full">Verify OTP</button>
+                </form>
+                <p id="otpMessage" class="mt-4 text-center"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PDF Viewer Modal -->
+    <div id="pdfModal" class="fixed inset-0 bg-black/70 flex items-center justify-center z-40 hidden">
+        <div class="bg-gray-800 p-4 rounded-xl max-w-4xl w-full">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="pdfTitle" class="text-lg">Document</h3>
+                <div class="flex gap-2">
+                    <button id="prevPage" class="bg-gray-700 p-2 rounded"><i class="fas fa-chevron-left"></i></button>
+                    <span id="pageInfo" class="px-2 py-1">Page 1 of 1</span>
+                    <button id="nextPage" class="bg-gray-700 p-2 rounded"><i class="fas fa-chevron-right"></i></button>
+                    <button id="downloadPdf" class="bg-gray-700 p-2 rounded"><i class="fas fa-download"></i></button>
+                    <button id="closePdf" class="bg-gray-700 p-2 rounded"><i class="fas fa-times"></i></button>
+                </div>
+            </div>
+            <canvas id="pdfCanvas" class="w-full bg-white rounded"></canvas>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="sticky top-0 bg-gray-800/90 backdrop-blur-md z-30">
+        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center">
+                    <i class="fas fa-bolt text-white"></i>
+                </div>
+                <span class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-red-500">VoltEdge</span>
+            </div>
+            <nav class="hidden md:flex gap-6">
+                <a href="#home" class="nav-link hover:text-blue-500">Home</a>
+                <a href="#materials" class="nav-link hover:text-blue-500">Materials</a>
+                <a href="#assignments" class="nav-link hover:text-blue-500">Assignments</a>
+                <a href="#papers" class="nav-link hover:text-blue-500">GTU Papers</a>
+                <a href="#calculator" class="nav-link hover:text-blue-500">Calculator</a>
+            </nav>
+            <div class="flex items-center gap-4">
+                <button id="authBtn" class="bg-blue-500 text-white px-4 py-2 rounded-full">Login</button>
+                <div id="userMenu" class="hidden">
+                    <button id="userBtn" class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span id="userName">User</span>
+                    </button>
+                    <div class="dropdown-menu absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg hidden">
+                        <a href="#profile" class="block px-4 py-2 hover:bg-gray-700">Profile</a>
+                        <a href="#dashboard" class="block px-4 py-2 hover:bg-gray-700 admin-only">Admin Dashboard</a>
+                        <a href="#" id="logoutBtn" class="block px-4 py-2 hover:bg-gray-700">Logout</a>
+                    </div>
+                </div>
+                <button id="mobileMenuBtn" class="md:hidden"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+        <div id="mobileMenu" class="hidden bg-gray-800 p-4 md:hidden">
+            <a href="#home" class="block py-2 nav-link">Home</a>
+            <a href="#materials" class="block py-2 nav-link">Materials</a>
+            <a href="#assignments" class="block py-2 nav-link">Assignments</a>
+            <a href="#papers" class="block py-2 nav-link">GTU Papers</a>
+            <a href="#calculator" class="block py-2 nav-link">Calculator</a>
+            <a href="#" id="mobileAuthBtn" class="block py-2 not-logged-in">Login / Sign Up</a>
+            <a href="#dashboard" class="block py-2 logged-in admin-only">Admin Dashboard</a>
+            <a href="#" id="mobileLogoutBtn" class="block py-2 logged-in">Logout</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="min-h-screen flex items-center justify-center text-center px-4">
+            <div>
+                <h1 class="text-4xl md:text-6xl font-bold mb-4">
+                    <span class="gradient-text">Master Electrical Engineering</span>
+                </h1>
+                <p class="text-lg text-gray-400 mb-6 max-w-2xl mx-auto">A platform for diploma students to learn, practice, and excel.</p>
+                <div class="flex gap-4 justify-center">
+                    <button id="getStartedBtn" class="bg-red-500 text-white px-6 py-3 rounded-lg relative overflow-hidden">
+                        Get Started
+                        <div class="spark-container absolute inset-0"></div>
+                    </button>
+                    <button class="border border-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-500/20">Explore</button>
+                </div>
+            </div>
+            <div class="circuit-paths absolute inset-0 z-0"></div>
+        </section>
+
+        <!-- Learning Materials -->
+        <section id="materials" class="py-16 px-4">
+            <div class="container mx-auto">
+                <h2 class="text-3xl font-bold text-center mb-4 gradient-text">Learning Materials</h2>
+                <p class="text-center text-gray-400 mb-8">Comprehensive resources for electrical engineering.</p>
+                <div class="flex justify-center gap-2 mb-8">
+                    <button class="tab-btn bg-gray-700 px-4 py-2 rounded-full active" data-tab="ewec">EWEC&C</button>
+                    <button class="tab-btn bg-gray-700 px-4 py-2 rounded-full" data-tab="dedi">DE&DI</button>
+                    <button class="tab-btn bg-gray-700 px-4 py-2 rounded-full" data-tab="duep">DUEP</button>
+                    <button class="tab-btn bg-gray-700 px-4 py-2 rounded-full" data-tab="acm">ACM</button>
+                </div>
+                <div id="ewecContent" class="tab-content grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Materials loaded by JS -->
+                </div>
+                <div id="dediContent" class="tab-content grid grid-cols-1 md:grid-cols-3 gap-6 hidden">
+                    <!-- Materials loaded by JS -->
+                </div>
+                <div id="duepContent" class="tab-content grid grid-cols-1 md:grid-cols-3 gap-6 hidden">
+                    <!-- Materials loaded by JS -->
+                </div>
+                <div id="acmContent" class="tab-content grid grid-cols-1 md:grid-cols-3 gap-6 hidden">
+                    <!-- Materials loaded by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Assignments -->
+        <section id="assignments" class="py-16 px-4 bg-gray-800">
+            <div class="container mx-auto">
+                <h2 class="text-3xl font-bold text-center mb-4 gradient-text">Assignments</h2>
+                <p class="text-center text-gray-400 mb-8">Practice your skills with these tasks.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Assignments loaded by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- GTU Papers -->
+        <section id="papers" class="py-16 px-4">
+            <div class="container mx-auto">
+                <h2 class="text-3xl font-bold text-center mb-4 gradient-text">GTU Papers</h2>
+                <p class="text-center text-gray-400 mb-8">Previous year question papers and solutions.</p>
+                <div class="flex flex-wrap gap-4 mb-8 bg-gray-800 p-4 rounded-lg">
+                    <div>
+                        <label for="subjectFilter" class="block mb-1">Subject</label>
+                        <select id="subjectFilter" class="bg-gray-700 p-2 rounded">
+                            <option value="all">All Subjects</option>
+                            <option value="ewec">EWEC&C</option>
+                            <option value="dedi">DE&DI</option>
+                            <option value="duep">DUEP</option>
+                            <option value="acm">ACM</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="yearFilter" class="block mb-1">Year</label>
+                        <select id="yearFilter" class="bg-gray-700 p-2 rounded">
+                            <option value="all">All Years</option>
+                            <option value="2023">2023</option>
+                            <option value="2022">2022</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="typeFilter" class="block mb-1">Type</label>
+                        <select id="typeFilter" class="bg-gray-700 p-2 rounded">
+                            <option value="all">All Types</option>
+                            <option value="question">Question Papers</option>
+                            <option value="solution">Solutions</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Papers loaded by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Calculator -->
+        <section id="calculator" class="py-16 px-4 bg-gray-800">
+            <div class="container mx-auto">
+                <h2 class="text-3xl font-bold text-center mb-4 gradient-text">Electrical Calculator</h2>
+                <p class="text-center text-gray-400 mb-8">Solve common electrical problems.</p>
+                <div class="flex flex-col md:flex-row gap-6 bg-gray-700 p-6 rounded-xl">
+                    <div class="w-full md:w-1/4">
+                        <h3 class="text-lg mb-4">Categories</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="calc-category block p-2 rounded hover:bg-blue-500 active" data-category="ohmsLaw">Ohm's Law</a></li>
+                            <li><a href="#" class="calc-category block p-2 rounded hover:bg-blue-500" data-category="power">Power</a></li>
+                        </ul>
+                    </div>
+                    <div class="w-full md:w-3/4">
+                        <div id="ohmsLawCalc" class="calculator-content">
+                            <h3 class="text-xl mb-2">Ohm's Law Calculator</h3>
+                            <p class="text-gray-400 mb-4">Calculate voltage, current, or resistance.</p>
+                            <form id="ohmsLawForm" class="space-y-4">
+                                <div>
+                                    <label for="knownQuantity" class="block mb-1">Calculate:</label>
+                                    <select id="knownQuantity" class="bg-gray-600 p-2 rounded w-full">
+                                        <option value="voltage">Voltage (V)</option>
+                                        <option value="current">Current (I)</option>
+                                        <option value="resistance">Resistance (R)</option>
+                                    </select>
+                                </div>
+                                <div class="voltage-inputs grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="currentInput" class="block mb-1">Current (A):</label>
+                                        <input type="number" id="currentInput" class="w-full p-2 bg-gray-600 rounded" placeholder="Enter current">
+                                    </div>
+                                    <div>
+                                        <label for="resistanceInput" class="block mb-1">Resistance (Ω):</label>
+                                        <input type="number" id="resistanceInput" class="w-full p-2 bg-gray-600 rounded" placeholder="Enter resistance">
+                                    </div>
+                                </div>
+                                <div class="current-inputs hidden grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="voltageInput1" class="block mb-1">Voltage (V):</label>
+                                        <input type="number" id="voltageInput1" class="w-full p-2 bg-gray-600 rounded" placeholder="Enter voltage">
+                                    </div>
+                                    <div>
+                                        <label for="resistanceInput1" class="block mb-1">Resistance (Ω):</label>
+                                        <input type="number" id="resistanceInput1" class="w-full p-2 bg-gray-600 rounded" placeholder="Enter resistance">
+                                    </div>
+                                </div>
+                                <div class="resistance-inputs hidden grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="voltageInput2" class="block mb-1">Voltage (V):</label>
+                                        <input type="number" id="voltageInput2" class="w-full p-2 bg-gray-600 rounded" placeholder="Enter voltage">
+                                    </div>
+                                    <div>
+                                        <label for="currentInput2" class="block mb-1">Current (A):</label>
+                                        <input type="number" id="currentInput2" class="w-full p-2 bg-gray-600 rounded" placeholder="Enter current">
+                                    </div>
+                                </div>
+                                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg w-full">Calculate</button>
+                            </form>
+                            <div id="ohmsLawResult" class="mt-4 p-4 bg-gray-600 rounded">
+                                <h4 class="text-lg">Result:</h4>
+                                <div class="text-xl">-</div>
+                            </div>
+                        </div>
+                        <div id="powerCalc" class="calculator-content hidden">
+                            <h3 class="text-xl mb-2">Power Calculator</h3>
+                            <p class="text-gray-400 mb-4">Calculate power in a circuit.</p>
+                            <!-- Add power calculator form here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Admin Dashboard -->
+        <section id="dashboard" class="py-16 px-4 admin-section hidden">
+            <div class="container mx-auto">
+                <h2 class="text-3xl font-bold text-center mb-4 gradient-text">Admin Dashboard</h2>
+                <p class="text-center text-gray-400 mb-8">Manage content and users.</p>
+                <div class="flex gap-2 mb-8">
+                    <button class="tab-btn bg-gray-700 px-4 py-2 rounded-full active" data-tab="content">Content</button>
+                    <button class="tab-btn bg-gray-700 px-4 py-2 rounded-full" data-tab="users">Users</button>
+                    <button class="tab-btn bg-gray-700 px-4 py-2 rounded-full" data-tab="upload">Upload</button>
+                </div>
+                <div id="contentTab" class="tab-content">
+                    <h3 class="text-xl mb-4">Content Management</h3>
+                    <table class="w-full bg-gray-700 rounded-lg">
+                        <thead>
+                            <tr class="bg-gray-800">
+                                <th class="p-4 text-left">Title</th>
+                                <th class="p-4 text-left">Type</th>
+                                <th class="p-4 text-left">Subject</th>
+                                <th class="p-4 text-left">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="contentTable">
+                            <!-- Content loaded by JS -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="usersTab" class="tab-content hidden">
+                    <h3 class="text-xl mb-4">User Management</h3>
+                    <table class="w-full bg-gray-700 rounded-lg">
+                        <thead>
+                            <tr class="bg-gray-800">
+                                <th class="p-4 text-left">Name</th>
+                                <th class="p-4 text-left">Email</th>
+                                <th class="p-4 text-left">Role</th>
+                                <th class="p-4 text-left">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userTable">
+                            <!-- Users loaded by JS -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="uploadTab" class="tab-content hidden">
+                    <h3 class="text-xl mb-4">Upload Content</h3>
+                    <form id="uploadForm" class="bg-gray-700 p-6 rounded-lg space-y-4">
+                        <div>
+                            <label for="contentTitle" class="block mb-1">Title</label>
+                            <input type="text" id="contentTitle" class="w-full p-2 bg-gray-600 rounded" required>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="contentType" class="block mb-1">Type</label>
+                                <select id="contentType" class="w-full p-2 bg-gray-600 rounded" required>
+                                    <option value="material">Learning Material</option>
+                                    <option value="assignment">Assignment</option>
+                                    <option value="paper">GTU Paper</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="contentSubject" class="block mb-1">Subject</label>
+                                <select id="contentSubject" class="w-full p-2 bg-gray-600 rounded" required>
+                                    <option value="ewec">EWEC&C</option>
+                                    <option value="dedi">DE&DI</option>
+                                    <option value="duep">DUEP</option>
+                                    <option value="acm">ACM</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="contentDescription" class="block mb-1">Description</label>
+                            <textarea id="contentDescription" class="w-full p-2 bg-gray-600 rounded" rows="3" required></textarea>
+                        </div>
+                        <div>
+                            <label for="contentFile" class="block mb-1">PDF File</label>
+                            <input type="file" id="contentFile" accept=".pdf" class="w-full p-2 bg-gray-600 rounded" required>
+                        </div>
+                        <div class="paper-options hidden flex gap-4">
+                            <div>
+                                <label for="paperYear" class="block mb-1">Year</label>
+                                <select id="paperYear" class="w-full p-2 bg-gray-600 rounded">
+                                    <option value="2023">2023</option>
+                                    <option value="2022">2022</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="paperType" class="block mb-1">Type</label>
+                                <select id="paperType" class="w-full p-2 bg-gray-600 rounded">
+                                    <option value="question">Question Paper</option>
+                                    <option value="solution">Solution</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg w-full">Upload</button>
+                    </form>
+                    <p id="uploadStatus" class="mt-4 hidden"></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 py-8 px-4">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <span class="text-lg font-bold">VoltEdge</span>
+                </div>
+                <p class="text-gray-400">A learning platform for electrical engineering students.</p>
+            </div>
+            <div>
+                <h3 class="text-lg mb-4">Quick Links</h3>
+                <ul class="space-y-2 text-gray-400">
+                    <li><a href="#home" class="hover:text-blue-500">Home</a></li>
+                    <li><a href="#materials" class="hover:text-blue-500">Materials</a></li>
+                    <li><a href="#assignments" class="hover:text-blue-500">Assignments</a></li>
+                    <li><a href="#papers" class="hover:text-blue-500">GTU Papers</a></li>
+                    <li><a href="#calculator" class="hover:text-blue-500">Calculator</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg mb-4">Contact</h3>
+                <p class="text-gray-400">Email: support@voltedge.com</p>
+                <p class="text-gray-400">Phone: +1 234 567 890</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="sparks-container fixed inset-0 pointer-events-none z-0"></div>
+    <script>
+        const supabase = supabase.createClient('https://roiwbbvstsqvbactegaj.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJvaXdiYnZzdHNxdmJhY3RlZ2FqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ2MTMwMTksImV4cCI6MjA2MDE4OTAxOX0.nS252aJ5abaaH-Eged99uHjEmBxSzZuqqdxhqAkrNhU');
+    </script>
+    <script src="script.js"></script>
 </html>
