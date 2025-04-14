@@ -1,22 +1,7 @@
 // script.js
 const supabase = supabase.createClient('https://roiwbbvstsqvbactegaj.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJvaXdiYnZzdHNxdmJhY3RlZ2FqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ2MTMwMTksImV4cCI6MjA2MDE4OTAxOX0.nS252aJ5abaaH-Eged99uHjEmBxSzZuqqdxhqAkrNhU');
 
-// Loader
-const loader = document.getElementById('loader');
-const loaderError = document.getElementById('loaderError');
 
-function hideLoader() {
-    gsap.to(loader, {
-        opacity: 0,
-        duration: 0.5,
-        onComplete: () => loader.style.display = 'none'
-    });
-}
-
-function showLoaderError(message) {
-    loaderError.textContent = message;
-    loaderError.classList.remove('hidden');
-}
 
 // Initialize
 window.addEventListener('load', async () => {
